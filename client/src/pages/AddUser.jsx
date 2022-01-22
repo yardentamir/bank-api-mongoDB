@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Card from "../../components/Card/Card";
-import TextInput from "../../components/TextInput/TextInput";
-import SubmitButton from "../../components/SubmitButton/SubmitButton";
-import { Flex } from "../../components/styles/Flex.styled";
-import { Container } from "../../components/styles/Container.styled";
-import { Form } from "../../components/styles/Form.styled";
-import myApi from "../../api/Api";
+import Card from "../components/Card/Card";
+import TextInput from "../components/TextInput/TextInput";
+import SubmitButton from "../components/SubmitButton/SubmitButton";
+import { Flex } from "../components/styles/Flex.styled";
+import { Container } from "../components/styles/Container.styled";
+import { Form } from "../components/styles/Form.styled";
+import myApi from "../api/Api";
 
 export default function LoadUsers() {
   const [addedUser, setAddedUser] = useState();

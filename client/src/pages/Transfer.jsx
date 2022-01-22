@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Card from "../../components/Card/Card";
-import TextInput from "../../components/TextInput/TextInput";
-import SubmitButton from "../../components/SubmitButton/SubmitButton";
-import { Flex } from "../../components/styles/Flex.styled";
-import { Container } from "../../components/styles/Container.styled";
-import { Form } from "../../components/styles/Form.styled";
-import myApi from "../../api/Api";
+import Card from "../components/Card/Card";
+import TextInput from "../components/TextInput/TextInput";
+import SubmitButton from "../components/SubmitButton/SubmitButton";
+import { Flex } from "../components/styles/Flex.styled";
+import { Container } from "../components/styles/Container.styled";
+import { Form } from "../components/styles/Form.styled";
+import myApi from "../api/Api";
 
 export default function Transfer() {
   const [users, setUsers] = useState();
@@ -42,7 +42,6 @@ export default function Transfer() {
   return (
     <Container>
       <Form>
-        <h2>Enter Sender Id, Getter Id and how much to Transfer </h2>
         {renderIdsInputs()}
         <TextInput key="transferAmount" text="amount" name="amount" callback={handleAmountChange} />
         <SubmitButton text="Transfer" callback={transfer} />

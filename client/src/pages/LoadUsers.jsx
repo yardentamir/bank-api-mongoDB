@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Card from "../../components/Card/Card";
-import { Flex } from "../../components/styles/Flex.styled";
-import { Container } from "../../components/styles/Container.styled"
-import myApi from "../../api/Api";
+import Card from "../components/Card/Card";
+import { Flex } from "../components/styles/Flex.styled";
+import { Container } from "../components/styles/Container.styled"
+import myApi from "../api/Api";
 
 export default function LoadUsers() {
   const [users, setUsers] = useState();

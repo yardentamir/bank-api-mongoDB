@@ -2,15 +2,15 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 
-import LoadUsers from "./pages/LoadUsers/LoadUsers";
-import Home from "./pages/Home/Home";
-import LoadUserByCash from "./pages/LoadUserByCash/LoadUserByCash";
-import LoadUserById from "./pages/LoadUserById/LoadUserById";
-import AddUser from "./pages/AddUser/AddUser";
-import Withdraw from "./pages/Withdraw/Withdraw";
-import Transfer from "./pages/Transfer/Transfer";
-import Deposit from "./pages/Deposit/Deposit";
-import UpdateCredit from "./pages/UpdateCredit/UpdateCredit";
+import LoadUsers from "./pages/LoadUsers";
+import Home from "./pages/Home";
+import LoadUserByCash from "./pages/LoadUserByCash";
+import LoadUserById from "./pages/LoadUserById";
+import AddUser from "./pages/AddUser";
+import Withdraw from "./pages/Withdraw";
+import Transfer from "./pages/Transfer";
+import Deposit from "./pages/Deposit";
+import UpdateCredit from "./pages/UpdateCredit";
 
 function App() {
   return (

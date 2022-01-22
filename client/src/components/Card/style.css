@@ -4,7 +4,6 @@
   display: block;
   background: transparent;
   min-width: 170px;
-  max-width: 150px;
   box-shadow: 20px 20px 30px -20px #00000040;
   border-radius: 15px;
 }

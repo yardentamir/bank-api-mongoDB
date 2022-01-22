@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from "../../components/styles/Container.styled"
+import { Container } from "../components/styles/Container.styled"
 
 export default function Home() {
 
