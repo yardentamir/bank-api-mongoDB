@@ -17,7 +17,7 @@ export default function LoadUsers() {
 
   const renderUsers = () => {
     return users.map((user) => {
-      return <Card key={user._id} title={user.name} cash={user.cash} credit={user.credit} isActive={user.isActive.toString()} />
+      return <Card key={user._id} id={user._id} title={user.name} cash={user.cash} credit={user.credit} isActive={user.isActive.toString()} />
     })
   }
 
