@@ -7,14 +7,18 @@ import { Container } from "../../components/styles/Container.styled";
 import { Form } from "../../components/styles/Form.styled";
 import myApi from "../../api/Api";
 
-export default function LoadUsers() {
+export default function Deposit() {
   const [user, setUser] = useState();
   const [amount, setAmount] = useState({});
   const [userId, setUserId] = useState('');
 
   const deposit = async () => {
-    const { data } = await myApi.put(`/users/deposit?id=${userId}`, amount);
-    setUser(data);
+    try {
+      const { data } = await myApi.put(`/users/deposit?id=${userId}`, amount);
+      setUser(data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   const handleAmount = ({ target: { name, value } }) => {
     setAmount({ [name]: +value });

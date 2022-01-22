@@ -81,7 +81,7 @@ const withdraw = async (req, res) => {
     const userAfterChanges = await findUserConvertToObject(id);
     res.status(201).send(userAfterChanges);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send(error);
   }
 };
 
@@ -106,7 +106,7 @@ const transfer = async (req, res) => {
 
     res.status(201).send([senderUserAfterChanges, getterUserAfterChanges]);
   } catch (error) {
-    res.status(404).send(error.message);
+    res.status(404).send(error);
   }
 };
 
@@ -129,7 +129,7 @@ const deposit = async (req, res) => {
     const userAfterChanges = await findUserConvertToObject(id);
     res.status(201).send(userAfterChanges);
   } catch (error) {
-    res.status(404).send(error.message);
+    res.status(404).send(error);
   }
 };
 
@@ -152,7 +152,7 @@ const updateCredit = async (req, res) => {
     const userAfterChanges = await findUserConvertToObject(id);
     res.status(201).send(userAfterChanges);
   } catch (error) {
-    res.status(404).send(error.message);
+    res.status(404).send(error);
   }
 };
 

@@ -12,8 +12,12 @@ export default function LoadUsersByCash() {
   const [cash, setCash] = useState();
 
   const loadUserByCash = async () => {
-    const { data } = await myApi.get(`/users/loadUserByCash?cash=${cash}`);
-    setUsers(data);
+    try {
+      const { data } = await myApi.get(`/users/loadUserByCash?cash=${cash}`);
+      setUsers(data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const renderUsers = () => {

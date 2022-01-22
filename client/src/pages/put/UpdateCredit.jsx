@@ -13,8 +13,12 @@ export default function LoadUsers() {
   const [userId, setUserId] = useState('');
 
   const deposit = async () => {
-    const { data } = await myApi.put(`/users/updateCredit?id=${userId}`, amount);
-    setUser(data);
+    try {
+      const { data } = await myApi.put(`/users/updateCredit?id=${userId}`, amount);
+      setUser(data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const handleAmount = ({ target: { name, value } }) => {

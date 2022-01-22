@@ -12,8 +12,12 @@ export default function LoadUsers() {
   const [newUser, setNewUser] = useState({});
 
   const AddUser = async () => {
-    const { data } = await myApi.post("/users/addUser", newUser);
-    setAddedUser(data);
+    try {
+      const { data } = await myApi.post("/users/addUser", newUser);
+      setAddedUser(data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const handleInputChange = ({ target: { name, value } }) => {

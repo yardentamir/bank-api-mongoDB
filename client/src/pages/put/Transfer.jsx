@@ -14,8 +14,12 @@ export default function Transfer() {
 
   const transfer = async () => {
     const { sender, getter } = UsersId;
-    const { data } = await myApi.put(`/users/transfer?sender=${sender}&getter=${getter}`, amount);
-    setUsers(data);
+    try {
+      const { data } = await myApi.put(`/users/transfer?sender=${sender}&getter=${getter}`, amount);
+      setUsers(data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const handleInputChange = ({ target: { name, value } }) => {

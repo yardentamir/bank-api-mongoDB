@@ -7,11 +7,16 @@ import myApi from "../../api/Api";
 export default function LoadUsers() {
   const [users, setUsers] = useState();
 
-  useEffect(() => {
-    const loadUsers = async () => {
+  const loadUsers = async () => {
+    try {
       const { data } = await myApi.get("/users/loadUsers");
       setUsers(data);
-    };
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
     loadUsers();
   }, [])
 

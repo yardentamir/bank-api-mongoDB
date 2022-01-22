@@ -12,8 +12,12 @@ export default function LoadUsersById() {
   const [id, setId] = useState();
 
   const loadUserById = async () => {
-    const { data } = await myApi.get(`/users/loadUserById?id=${id}`);
-    setUsers(data);
+    try {
+      const { data } = await myApi.get(`/users/loadUserById?id=${id}`);
+      setUsers(data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
 
