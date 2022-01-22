@@ -1,0 +1,53 @@
+      
+      to fetch "transfer":
+      params: sender/getter
+       example-  
+       {
+           "amount": 200
+       }
+
+       //-------------------//
+
+  
+      to fetch "withdraw":
+
+      params: id
+       example-
+       {
+           "amount": 200
+       }
+
+       //-------------------//
+
+
+      to fetch "update-credit":
+
+      params: id
+       example-
+       {
+           "credit": 200
+       }
+
+       //-------------------//
+
+
+      to fetch "deposit":
+
+      params: id
+       example-
+       {
+           "amount": 200
+       }
+
+
+       //-------------------//
+
+
+      to fetch "add user":
+
+       example-
+       {
+           "credit":200,
+           "cash": 200,
+           "isActive": true
+       }

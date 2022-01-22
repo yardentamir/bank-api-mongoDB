@@ -1,0 +1,23 @@
+.card {
+  position: relative;
+  z-index: 1;
+  display: block;
+  background: transparent;
+  min-width: 170px;
+  max-width: 150px;
+  box-shadow: 20px 20px 30px -20px #00000040;
+  border-radius: 15px;
+}
+
+.card-content {
+  clear: both;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+h2.title {
+  font-size: 20px;
+  margin-bottom: 25px;
+  text-align: center;
+}
