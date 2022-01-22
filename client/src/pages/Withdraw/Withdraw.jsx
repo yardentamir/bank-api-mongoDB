@@ -25,7 +25,7 @@ export default function LoadUsers() {
     console.log(user)
     return <Card key={user._id} title={user.name} id={user._id} cash={user.cash} credit={user.credit} isActive={user.isActive.toString()} />
   }
-
+  //
   return (
     <Container>
       <Form>
