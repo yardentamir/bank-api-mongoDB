@@ -62,9 +62,11 @@ const userToObject = (user) => {
 
 const allUsers = () => User.find();
 
-const updateUser = (id, body) => User.findByIdAndUpdate(id, body);
+const updateUser = async (id, body) =>
+  await User.findByIdAndUpdate(id, { $set: body }, { new: true });
 
 const findUserBy = (key, value) => User.find({ [key]: value });
+// find return [ even if it's empty] findOne || findById return {} || undefind
 
 module.exports = {
   validateUser,

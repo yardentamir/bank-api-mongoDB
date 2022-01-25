@@ -6,18 +6,30 @@ import myApi from "../../api/Api";
 
 export default function LoadUsers() {
   const [users, setUsers] = useState();
+  const [avatarExp, setAvatarExp] = useState();
 
   const loadUsers = async () => {
     try {
       const { data } = await myApi.get("/users/loadUsers");
       setUsers(data);
     } catch (error) {
-      console.log(error.message);
+      console.log(error.response.data);
+    }
+  };
+
+
+  const avatarExpFunc = async () => {
+    try {
+      const { data } = await myApi.get(`users/61ee7b8381f30d9aa8ca2c5b/avatar`);
+      setAvatarExp(data);
+    } catch (error) {
+      console.log(error.response.data);
     }
   };
 
   useEffect(() => {
     loadUsers();
+    avatarExpFunc();
   }, [])
 
   const renderUsers = () => {
@@ -33,6 +45,7 @@ export default function LoadUsers() {
           {renderUsers()}
         </Flex>
       }
+      {avatarExp && <img src={`data:image/png;base64,${avatarExp}`} alt="avatar" width="100" height="100" />}
     </Container>
   )
 }

@@ -12,12 +12,13 @@ export default function LoadUsers() {
   const [amount, setAmount] = useState({});
   const [userId, setUserId] = useState('');
 
-  const withdraw = async () => {
+  const withdraw = async (e) => {
+    e.preventDefault();
     try {
-      const { data } = await myApi.put(`/users/withdraw?id=${userId}`, amount);
+      const { data } = await myApi.put(`/users/withdraw/${userId}`, amount);
       setUser(data);
     } catch (error) {
-      console.log(error.message);
+      console.log(error.response.data);
     }
   };
 

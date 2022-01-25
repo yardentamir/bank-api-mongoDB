@@ -4,7 +4,7 @@ import TextInput from "../../components/TextInput/TextInput";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import { Flex } from "../../components/styles/Flex.styled";
 import { Container } from "../../components/styles/Container.styled";
-import { Form } from "../../components/styles/Form.styled";
+// import { Form } from "../../components/styles/Form.styled";
 import myApi from "../../api/Api";
 
 export default function LoadUsers() {
@@ -16,7 +16,7 @@ export default function LoadUsers() {
       const { data } = await myApi.post("/users/addUser", newUser);
       setAddedUser(data);
     } catch (error) {
-      console.log(error.message);
+      console.log(error.response.data);
     }
   };
 
@@ -28,6 +28,12 @@ export default function LoadUsers() {
     }
     setNewUser({ ...newUser, [name]: value });
   }
+
+  // const handelFileUpload = async ({ target }) => {
+  //   console.log(target.files[0]);
+  //   const { data } = await myApi.post("/users/uploadAvatar", target.files[0]);
+  //   console.log(data)
+  // }
 
   const renderUser = () => {
     return <Card key={addedUser._id} title={addedUser.name} id={addedUser._id} cash={addedUser.cash} credit={addedUser.credit} isActive={addedUser.isActive.toString()} />
@@ -42,10 +48,13 @@ export default function LoadUsers() {
 
   return (
     <Container>
-      <Form>
+      {/* <Form> */}
+      <form action="http://localhost:5000/api/users/uploadAvatar" method="post" encType="multipart/form-data">
         {renderInputs()}
+        <input type="file" name="avatar" />
         <SubmitButton text="Add User" callback={AddUser} />
-      </Form>
+      </form>
+      {/* </Form> */}
       {addedUser &&
         <Flex>
           {renderUser()}

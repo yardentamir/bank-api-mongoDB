@@ -11,12 +11,13 @@ export default function LoadUsersById() {
   const [users, setUsers] = useState();
   const [id, setId] = useState();
 
-  const loadUserById = async () => {
+  const loadUserById = async (e) => {
+    e.preventDefault();
     try {
-      const { data } = await myApi.get(`/users/loadUserById?id=${id}`);
+      const { data } = await myApi.get(`/users/loadUserById/${id}`);
       setUsers(data);
     } catch (error) {
-      console.log(error.message);
+      console.log(error.response.data);
     }
   };
 

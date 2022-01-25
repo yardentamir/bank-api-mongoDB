@@ -10,13 +10,17 @@ import myApi from "../../api/Api";
 export default function LoadUsersByCash() {
   const [users, setUsers] = useState();
   const [cash, setCash] = useState();
+  const [errorMsg, setErrorMsg] = useState();
 
-  const loadUserByCash = async () => {
+  const loadUserByCash = async (e) => {
+    e.preventDefault();
+    setErrorMsg();
     try {
-      const { data } = await myApi.get(`/users/loadUserByCash?cash=${cash}`);
+      const { data } = await myApi.get(`/users/loadUserByCash/${cash}`);
       setUsers(data);
     } catch (error) {
-      console.log(error.message);
+      console.log(error.response.data);
+      setErrorMsg(error.response.data);
     }
   };
 
@@ -36,6 +40,9 @@ export default function LoadUsersByCash() {
         <Flex>
           {renderUsers()}
         </Flex>
+      }
+      {errorMsg &&
+        <p>{errorMsg}</p>
       }
     </Container>
   )

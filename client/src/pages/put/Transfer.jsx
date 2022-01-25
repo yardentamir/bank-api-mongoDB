@@ -12,13 +12,14 @@ export default function Transfer() {
   const [amount, setAmount] = useState({});
   const [UsersId, setUsersId] = useState({});
 
-  const transfer = async () => {
+  const transfer = async (e) => {
+    e.preventDefault();
     const { sender, getter } = UsersId;
     try {
-      const { data } = await myApi.put(`/users/transfer?sender=${sender}&getter=${getter}`, amount);
+      const { data } = await myApi.put(`/users/transfer/${sender}/${getter}`, amount);
       setUsers(data);
     } catch (error) {
-      console.log(error.message);
+      console.log(error.response.data);
     }
   };
 

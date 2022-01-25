@@ -1,12 +1,13 @@
 require("dotenv").config();
-require("./server/db/mongoose");
+require("./db/mongoose");
 const express = require("express");
-const userRouter = require("./server/routes/users");
 const cors = require("cors");
-const app = express();
 const path = require("path");
+const userRouter = require("./routes/users");
 
-const publicPath = path.join(__dirname, "client/build");
+const app = express();
+
+const publicPath = path.join(__dirname, "./server/client/build");
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
@@ -18,6 +19,10 @@ app.use("/api/users", userRouter);
 app.get("*", (req, res) => {
   console.log("not found");
   res.sendFile(path.resolve(publicPath, "index.html"));
+});
+
+app.use("*", (req, res) => {
+  res.status(500).send("route is not found");
 });
 
 app.listen(port, () => {
