@@ -28,16 +28,11 @@ const addUser = async (req, res) => {
     res.status(400).send(error.message);
   }
 };
-// `http://localhost:8080/api/users/${idValue}`
+
 const loadUserById = async (req, res) => {
   const { id } = req.params;
-  // change the query to params this id isn't optional
   try {
     const user = await findUserBy("_id", id);
-
-    if (!user) {
-      throw new Error("There is no such users");
-    }
 
     res.status(201).send(user);
   } catch (error) {
@@ -50,8 +45,6 @@ const loadUserByCash = async (req, res) => {
 
   try {
     const user = await findUserBy("cash", cash);
-
-    if (!user) throw new Error("There is no such users");
 
     res.status(201).send(user);
   } catch (error) {
@@ -77,15 +70,13 @@ const withdraw = async (req, res) => {
 
     const user = await findUserConvertToObject(id);
 
-    isActiveValidation(user);
+    if (!user.isActive) throw new Error("The user isn't active");
     // this function have no meaning
 
     const userAfterValidation = withdrawValidation(user, amount);
     const updatedUser = await updateUser(id, userAfterValidation);
-    await updatedUser.save(); // if the user need an update he must be exists
 
-    const userAfterChanges = await findUserConvertToObject(id);
-    res.status(201).send(userAfterChanges);
+    res.status(201).send(updatedUser);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -99,19 +90,26 @@ const transfer = async (req, res) => {
 
     const senderUser = await findUserConvertToObject(sender);
     const getterUser = await findUserConvertToObject(getter);
-    // this is a good name because its match with the params (query)
+
     validateUser(senderUser);
     validateUser(getterUser);
 
     isActiveValidation(senderUser);
 
-    await updateUserWithdraw(sender, senderUser, amount, "sender");
-    await updateUserWithdraw(getter, getterUser, amount, "getter");
+    const updatedSenderUser = await updateUserWithdraw(
+      sender,
+      senderUser,
+      amount,
+      "sender"
+    );
+    const updatedGetterUser = await updateUserWithdraw(
+      getter,
+      getterUser,
+      amount,
+      "getter"
+    );
 
-    const senderUserAfterChanges = await findUserConvertToObject(sender);
-    const getterUserAfterChanges = await findUserConvertToObject(getter);
-
-    res.status(201).send([senderUserAfterChanges, getterUserAfterChanges]);
+    res.status(201).send([updatedSenderUser, updatedGetterUser]);
   } catch (error) {
     res.status(404).send(error.message);
   }
@@ -131,10 +129,8 @@ const deposit = async (req, res) => {
     isActiveValidation(user);
 
     const updatedUser = await updateUser(id, user);
-    await updatedUser.save();
 
-    const userAfterChanges = await findUserConvertToObject(id);
-    res.status(201).send(userAfterChanges);
+    res.status(201).send(updatedUser);
   } catch (error) {
     res.status(404).send(error.message);
   }
@@ -156,10 +152,8 @@ const updateCredit = async (req, res) => {
     isActiveValidation(user);
 
     const updatedUser = await updateUser(id, user);
-    await updatedUser.save();
 
-    const userAfterChanges = await findUserConvertToObject(id);
-    res.status(201).send(userAfterChanges);
+    res.status(201).send(updatedUser);
   } catch (error) {
     res.status(404).send(error.message);
   }
@@ -179,20 +173,21 @@ const updateCredit = async (req, res) => {
 
 const uploadAvatar = async (req, res) => {
   const { id } = req.params;
+  try {
+    const buffer = await sharp(req.file.buffer)
+      .resize({ width: 250, height: 250 })
+      .png()
+      .toBuffer();
 
-  const buffer = await sharp(req.file.buffer)
-    .resize({ width: 250, height: 250 })
-    .png()
-    .toBuffer();
+    const user = await findUserConvertToObject(id);
+    user.avatar = JSON.parse(JSON.stringify(buffer));
 
-  const user = await findUserConvertToObject(id);
-  user.avatar = JSON.parse(JSON.stringify(buffer));
+    const updatedUser = await updateUser(id, user);
 
-  const updatedUser = await updateUser(id, user);
-
-  console.log(updatedUser);
-
-  res.status(201).send(updatedUser);
+    res.status(201).send(updatedUser);
+  } catch (e) {
+    res.send(e.message);
+  }
 };
 
 const errorUploadAvatar = (error, req, res, next) => {
@@ -207,10 +202,11 @@ const loadAvatar = async (req, res) => {
 
     if (!user.avatar) res.status(201).send("");
 
-    res.set("Content-Type", "image/png");
-    res.status(201).send(user.avatar.toString("base64"));
+    // res.set("Content-Type", "image/png");
+    const avatarToBase64 = user.avatar.toString("base64");
+    res.status(201).send(avatarToBase64);
   } catch (error) {
-    res.status(404).send(error.response.data);
+    res.status(404).send(error.message);
   }
 };
 
