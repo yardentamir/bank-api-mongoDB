@@ -18,7 +18,7 @@ app.use(express.static(publicPath));
 app.use("/api/users", userRouter);
 
 app.use("*", (req, res) => {
-  res.status(500).send("route is not found");
+  res.status(500).send("hhhhhh");
 });
 
 app.listen(port, () => {
