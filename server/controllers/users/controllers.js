@@ -20,7 +20,6 @@ const addUser = async (req, res) => {
     const userBody = req.body;
     const user = new User(userBody);
 
-    validateUser(userBody);
     const token = await user.generateAuthToken();
     await user.save();
     res.status(201).send({ user, token });
@@ -91,10 +90,7 @@ const transfer = async (req, res) => {
     const senderUser = await findUserConvertToObject(sender);
     const getterUser = await findUserConvertToObject(getter);
 
-    validateUser(senderUser);
-    validateUser(getterUser);
-
-    isActiveValidation(senderUser);
+    if (!senderUser.isActive) throw new Error("The user isn't active");
 
     const updatedSenderUser = await updateUserWithdraw(
       sender,
@@ -148,8 +144,7 @@ const updateCredit = async (req, res) => {
     const user = await findUserConvertToObject(id);
     user.credit = credit;
 
-    validateUser(user);
-    isActiveValidation(user);
+    if (!user.isActive) throw new Error("The user isn't active");
 
     const updatedUser = await updateUser(id, user);
 
@@ -194,30 +189,35 @@ const errorUploadAvatar = (error, req, res, next) => {
   res.status(400).send({ error: error.message });
 };
 
-const loadAvatar = async (req, res) => {
+const loadAvatar = async (req, res, next) => {
+  const { id } = req.params;
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(id);
 
-    if (!user) res.status(201).send("no user");
+    if (!user.avatar) throw new Error("no avatar image");
+    console.log("has avatar image");
+    res.set("Content-Type", "image/png");
 
-    if (!user.avatar) res.status(201).send("");
-
-    // res.set("Content-Type", "image/png");
     const avatarToBase64 = user.avatar.toString("base64");
     res.status(201).send(avatarToBase64);
   } catch (error) {
-    res.status(404).send(error.message);
+    // res.status(404).send(error.message);
+    next(error.message);
   }
 };
 
-const userLogin = async (req, res) => {
-  const { email, password } = req.body;
+const userLogin = async (req, res, next) => {
   try {
+    const { email, password } = req.body;
+
     const user = await User.findByCredentials(email, password);
     const token = await user.generateAuthToken();
+    console.log(token);
+    console.log({ user, token });
     res.send({ user, token });
-  } catch (e) {
-    res.status(400).send(error.response.data);
+  } catch (error) {
+    next(error.message);
+    // res.status(400).send(error.response.data);
   }
 };
 
