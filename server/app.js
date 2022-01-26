@@ -7,7 +7,7 @@ const userRouter = require("./routes/users");
 
 const app = express();
 
-const publicPath = path.join(__dirname, "./server/client/build");
+const publicPath = path.join(__dirname, "./client/build");
 const port = process.env.PORT || 5000;
 
 app.use(express.urlencoded({ extended: false }));
